@@ -37,12 +37,16 @@ const chooseTabulatureColumn = () => {
   guitarStore.chooseTabulatureColumn(props.position);
 }
 
-watch(tabulature, () => {
-  tabulature.value.forEach((item) => {
-    if(item.position === props.position) {
-      tabulatureColumnDisplay.value[item.string] = item.fret
-    }
-  })
+watch(tabulature, (newVal) => {
+  if (!newVal.some(item => item.position === props.position)) {
+    tabulatureColumnDisplay.value = [...INITIAL_TABULATURE_STATE];
+  } else {
+    newVal.forEach((item) => {
+      if (item.position === props.position) {
+        tabulatureColumnDisplay.value[item.string] = item.fret;
+      }
+    });
+  }
 }, {deep: true});
 
 </script>

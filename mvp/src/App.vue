@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import TabulatureDisplay from "./components/TabulatureDisplay.vue";
 import GuitarDisplay from "./components/GuitarDisplay.vue";
+import ActionsPanel from "./components/actions/ActionsPanel.vue";
 </script>
 
 <template>
   <div class="app">
     <tabulature-display />
     <div class="guitar-display">
+      <actions-panel />
       <guitar-display />
     </div>
   </div>
