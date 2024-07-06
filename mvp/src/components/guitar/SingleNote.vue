@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import {useGuitarStore} from "../../store/guitar-store.ts";
-import {computed} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {storeToRefs} from "pinia";
 
 const props =defineProps<{
@@ -16,6 +16,9 @@ const props =defineProps<{
   string: number
 }>();
 
+const audio = ref<HTMLAudioElement>();
+const audioUrl = ref("");
+const audioModule = ref("");
 const guitarStore = useGuitarStore();
 const { tabulatureColumnChosenPosition } = storeToRefs(guitarStore);
 
@@ -30,8 +33,23 @@ const tabulatureItem = computed(() => {
 
 const addTabulatureItem = () => {
   guitarStore.addTabulatureItem(tabulatureItem.value);
+  playNote();
 }
 
+const playNote =  () => {
+   audio.value.play();
+}
+
+
+onMounted(async () => {
+  let note = guitarStore.convertSignToAudioFileFormat(props.sign);
+  const octave = guitarStore.calculateOctave(props.fret);
+  note = `${note}${octave}`;
+  const url = `../../assets/music-notes/${note}.mp3`;
+  audioModule.value = await import(url);
+  audioUrl.value = audioModule.value.default;
+  audio.value = new Audio(audioUrl.value);
+})
 
 </script>
 

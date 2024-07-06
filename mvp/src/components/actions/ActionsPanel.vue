@@ -1,10 +1,10 @@
 <template>
 <div class="actions-panel">
-  <action-button > <IconPlayerPlay size="2rem" /> </action-button>
-  <action-button > <IconRestore size="2rem" /> </action-button>
+  <action-button @click="playTabulatureHandler">  <IconPlayerPlay size="2rem" /> </action-button>
+  <action-button @click="playFromBeginningHandler">  <IconRestore size="2rem" /> </action-button>
   <action-button @click="removeHandler"> <IconCircleMinus size="2rem" /> </action-button>
   <action-button @click="resetHandler"> <IconTrash size="2rem" /> </action-button>
-  <action-button> <IconDownload size="2rem" /> </action-button>
+  <action-button @click="generatePdfHandler"> <IconDownload size="2rem" /> </action-button>
  </div>
 </template>
 
@@ -26,6 +26,18 @@ const removeHandler = () => {
 const resetHandler = () => {
   guitarStore.resetTabulature();
 };
+
+const playTabulatureHandler = () => {
+  guitarStore.playTabulature();
+}
+
+const playFromBeginningHandler = () => {
+  guitarStore.playFromBeginning();
+}
+
+const generatePdfHandler = () => {
+  guitarStore.generatePdf();
+}
 </script>
 
 <style scoped lang="scss">
