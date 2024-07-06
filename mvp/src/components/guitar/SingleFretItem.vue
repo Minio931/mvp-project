@@ -3,7 +3,7 @@
       <span>{{ fret }}</span>
       <notes-column :notes="notes" :fret="fret" />
     </div>
-    <div v-if="fret != 12" class="vertical-divider"></div>
+    <div v-if="fret != '12'" class="vertical-divider"></div>
 </template>
 
 <script setup lang="ts">

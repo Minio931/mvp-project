@@ -2,6 +2,7 @@ import {defineStore} from "pinia";
 import {ref} from "vue";
 import {Tabulature} from "../types/tabulature.ts";
 import {jsPDF} from "jspdf";
+import {TabulaturePDF} from "../types/TabulaturePDF.ts";
 
 
 export const useGuitarStore = defineStore("useGuitarStore", () => {
@@ -58,6 +59,7 @@ export const useGuitarStore = defineStore("useGuitarStore", () => {
 
         for (const item of filteredTabulature) {
                 let note = convertSignToAudioFileFormat(item.note);
+                //@ts-ignore
                 const octave = calculateOctave(item.fret);
                 note = `${note}${octave}`;
                 const url = `../assets/music-notes/${note}.mp3`;
@@ -104,10 +106,10 @@ export const useGuitarStore = defineStore("useGuitarStore", () => {
         pdf.save("tabulature.pdf");
     }
 
-    const generateStingPdfContent = (array: any, stringArray: string[]) => {
+    const generateStingPdfContent = (array: any, stringArray: Tabulature[]) => {
         let pdfContent = "";
         let arrayToModify = array;
-        stringArray.forEach((item: Tabulature) => {
+        stringArray.forEach((item:Tabulature ) => {
             arrayToModify[item.position - 1] = item.fret;
         });
         pdfContent = arrayToModify.join("");
@@ -122,7 +124,7 @@ export const useGuitarStore = defineStore("useGuitarStore", () => {
 
     const generateArrayOfTabulature = () => {
         const lastPosition = findLastPosition();
-        const array = {
+        const array: TabulaturePDF = {
             firstString: [],
             secondString: [],
             thirdString: [],

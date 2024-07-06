@@ -19,12 +19,14 @@ const numberOfTabulatureColumnsToRender = ref(0);
 
 const calculateNumberOfTabulatureColumnsToRender = () => {
   if (tabulatureDisplayRef.value) {
+    //@ts-ignore
     return (tabulatureDisplayRef.value.$el.clientWidth - 36) / (1.25 * 16);
   }
 }
 
 onMounted(() => {
-  numberOfTabulatureColumnsToRender.value = Math.floor(calculateNumberOfTabulatureColumnsToRender()) - 1;
+  const numberToRender = calculateNumberOfTabulatureColumnsToRender() ?? 0;
+  numberOfTabulatureColumnsToRender.value = Math.floor( numberToRender ) - 1;
 })
 </script>
 
