@@ -20,7 +20,6 @@ export const useGuitarStore = defineStore("useGuitarStore", () => {
         tabulature.value = tabulature.value.filter((item) => {
             return item.position !== tabulatureColumnChosenPosition.value;
         });
-        console.log(tabulatureColumnChosenPosition.value, tabulature.value);
         tabulatureColumnChosenPosition.value = tabulatureColumnChosenPosition.value - 1 > -1 ? tabulatureColumnChosenPosition.value - 1 : 1;
     }
 

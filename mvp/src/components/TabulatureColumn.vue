@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import {useGuitarStore} from "../store/guitar-store.ts";
-import {computed, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {storeToRefs} from "pinia";
 
 const props = defineProps<{
@@ -37,11 +37,13 @@ const chooseTabulatureColumn = () => {
   guitarStore.chooseTabulatureColumn(props.position);
 }
 
-watch(tabulature, (newVal) => {
-  if (!newVal.some(item => item.position === props.position)) {
-    tabulatureColumnDisplay.value = [...INITIAL_TABULATURE_STATE];
+watch(tabulature, () => {
+  if (!tabulature.value.some(item => item.position === props.position)) {
+    tabulatureColumnDisplay.value.forEach((item, index) => {
+      tabulatureColumnDisplay.value[index] = "-";
+    });
   } else {
-    newVal.forEach((item) => {
+    tabulature.value.forEach((item) => {
       if (item.position === props.position) {
         tabulatureColumnDisplay.value[item.string] = item.fret;
       }
